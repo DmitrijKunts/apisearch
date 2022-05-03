@@ -27,24 +27,22 @@ class Search extends Controller
             ->all();
 
         foreach ($accs as $acc) {
-            $count = (int)Cache::get($acc[0]);
-            if ($count < 100) {
+            if (!Cache::has($acc[0])) {
                 $params = collect([
                     'cx' => $acc[0],
                     'key' => $acc[1],
                 ])->merge($request->all())
                     ->all();
                 if (isset($params['query'])) $params['q'] = $params['query'];
-                Cache::put($acc[0], $count + 1, 60 * 60 * 24);
                 try {
                     $response = Http::get('https://www.googleapis.com/customsearch/v1', $params);
                 } catch (\Exception $e) {
-                    Cache::put($acc[0], 100, 60 * 60 * 24);
-                    return $this->genNoLimits();
+                    Cache::put($acc[0], true, 60 * 5); //pause 5 min
+                    continue;
                 }
                 if (!$response->successful()) {
-                    Cache::put($acc[0], 100, 60 * 60 * 24);
-                    return $this->genNoLimits();
+                    Cache::put($acc[0], true, 60 * 5); //pause 5 min
+                    continue;
                 }
 
                 $grouping = [];
