@@ -84,16 +84,16 @@ class Search extends Controller
             '_attributes' => ['code' => 200],
             '_value' => 'No limits',
         ];
-        return $this->genResponse($res, 429);
+        return $this->genResponse($res);
     }
 
-    private function genResponse($array, $status = 200)
+    private function genResponse($array)
     {
         $array['response']['_attributes'] = ['date' => now()->format('Ymd\THis')];
         return response(ArrayToXml::convert($array, [
             'rootElementName' => 'yandexsearch',
             '_attributes' => ['version' => '1.0']
-        ]), $status)
+        ]))
             ->header('Content-Type', 'application/xml; charset=UTF-8');
     }
 }
