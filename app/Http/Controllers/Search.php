@@ -47,7 +47,7 @@ class Search extends Controller
 
                 $grouping = [];
                 $json = json_decode($response->body());
-                foreach ($json->items as $k => $item) {
+                foreach ($json->items ?? [] as $k => $item) {
                     $e = [
                         '_attributes' => ['id' => (int)($k + 1)],
                         'doccount' => 1,
@@ -61,13 +61,25 @@ class Search extends Controller
                     ];
                     $grouping['group'][] = $e;
                 }
-                $res['response']['results']['grouping'] = $grouping;
-
-                $res['response']['found']['_attributes'] = ['priority' => 'all'];
-                $res['response']['found']['_value'] = $json->searchInformation->totalResults;
-
-                $res['response']['results']['grouping']['page']['_value'] = '0';
-                $res['response']['results']['grouping']['page']['_attributes'] = ['first' => '1', 'last' => 9];
+                $res = [
+                    'response' => [
+                        'found' => [
+                            '_attributes' => ['priority' => 'all'],
+                            '_value' => $json->searchInformation->totalResults
+                        ],
+                        'results' => [
+                            'grouping' => [
+                                array_merge(
+                                    ['page' => [
+                                        '_value' => '0',
+                                        '_attributes' => ['first' => '1', 'last' => 9]
+                                    ]],
+                                    $grouping
+                                )
+                            ],
+                        ],
+                    ],
+                ];
 
                 return $this->genResponse($res);
             }
