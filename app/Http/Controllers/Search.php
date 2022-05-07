@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\XmlResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -81,7 +82,7 @@ class Search extends Controller
                     ],
                 ];
 
-                return $this->genResponse($res);
+                return XmlResponse::makeRespose($res);
             }
         }
         return $this->genNoLimits();
@@ -94,16 +95,7 @@ class Search extends Controller
             '_attributes' => ['code' => 200],
             '_value' => 'No limits',
         ];
-        return $this->genResponse($res);
+        return XmlResponse::makeRespose($res);
     }
 
-    private function genResponse($array)
-    {
-        $array['response']['_attributes'] = ['date' => now()->format('Ymd\THis')];
-        return response(ArrayToXml::convert($array, [
-            'rootElementName' => 'yandexsearch',
-            '_attributes' => ['version' => '1.0']
-        ]))
-            ->header('Content-Type', 'application/xml; charset=UTF-8');
-    }
 }
