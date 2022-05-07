@@ -56,7 +56,7 @@ class Search extends Controller
                             'breadcrumbs' => $item->link,
                             'title' => $item->title,
                             'contenttype' => 'organic',
-                            'passages' => ['passage' => $item->snippet],
+                            'passages' => ['passage' => $item->snippet ?? ''],
                         ]
                     ];
                     $grouping['group'][] = $e;
