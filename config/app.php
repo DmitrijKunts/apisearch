@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Facade;
 
 return [
 
+    'api_key' => env('API_KEY', ''),
+
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -16,7 +19,6 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    'api_key' => env('API_KEY', ''),
 
     /*
     |--------------------------------------------------------------------------
