@@ -22,3 +22,5 @@
 Пример настройки KeyCollector для работы через этот сервис
 
 <img src="https://codelockerlab.com/github/kcapisample.png">
+
+https://codelockerlab.com/github/kcapisample.png
