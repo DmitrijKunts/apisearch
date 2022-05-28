@@ -5,8 +5,6 @@
 * https://xmlriver.com/
 * https://xmlstock.com/ 
 
-В .env нужно указать API_KEY для доступа из стороннего софта, например KeyCollector.
-
 Но только для Google, использует Custom Search API  https://support.google.com/programmable-search/
 
 
@@ -18,3 +16,9 @@
 ......
 ```
 Инструкция как регистрировать аккаунты https://mixedanalytics.com/blog/seo-data-google-custom-search-json-api/
+
+В .env нужно указать API_KEY для доступа из стороннего софта, например KeyCollector.
+
+Пример настройки KeyCollector для работы через этот сервис
+
+<img src="https://codelockerlab.com/github/kcapisample.png" width="400">
